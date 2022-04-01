@@ -8,44 +8,56 @@
 
 namespace samuelelonghin\form\inputs;
 
+use kartik\base\InputWidget;
+use samuelelonghin\grid\toggle\assets\RoundSwitchThemeAsset;
 use Yii;
-use samuelelonghin\form\inputs\RoundSwitchInputAsset;
-use yii\base\Widget;
+use yii\bootstrap5\Html;
+
 /**
  * Render a round switch toggleColumn in Yii2 GridView.
  * @author Nick Denry
  */
-class RoundSwitchInput extends Widget
+class RoundSwitchInput extends InputWidget
 {
 
-    public $field = null;
-    public $active = true;
-    public $disabledSwitchTextAttribute = '';
-    /**
-     * {@inheritdoc}
-     */
-    public function init()
-    {
-        $this->filter = [
-            '1' => Yii::t('yii', 'Yes'),
-            '0' => Yii::t('yii', 'No'),
-        ];
+	public $field = null;
+	public $model = null;
+	public $attribute = null;
+	public $filter = null;
+	public $active = true;
+	public $disabledSwitchTextAttribute = '';
 
-        RoundSwitchInputAsset::register(Yii::$app->view);
-        parent::init();
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function init()
+	{
+		$this->filter = [
+			'1' => Yii::t('yii', 'Yes'),
+			'0' => Yii::t('yii', 'No'),
+		];
+		parent::init();
 
-    /**
-     * {@inheritdoc}
-     */
+		if ($this->field) {
+			$this->field = Html::checkbox($this->name, $this->value);
+		}
+
+		RoundSwitchThemeAsset::register(Yii::$app->view);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 
 
-    protected function run()
-    {
-        return Yii::$app->view->render('@samuelelonghin/form/inputs/views/switch', [
-            'field' => $this->field,
-            'active' => $this->active,
-            'disabledSwitchText' => '',
-        ]);
-    }
+	public function run()
+	{
+		return Yii::$app->view->render('@samuelelonghin/form/inputs/views/switch', [
+			'field' => $this->field,
+			'name' => $this->name,
+			'value' => $this->value,
+			'active' => $this->active,
+			'disabledSwitchText' => '',
+		]);
+	}
 }

@@ -18,11 +18,11 @@
   ],
   "require": {
     "yiisoft/yii2": "*",
-    "yiisoft/yii2-bootstrap4": "^2.0"
+    "samuelelonghin/yii2-round-switch-column":"*"
   },
   "autoload": {
     "psr-4": {
-      "samuelelonghin\\form\\inputs": "src"
+      "samuelelonghin\\form\\inputs\\": "src"
     }
   }
 }
